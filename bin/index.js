@@ -5,8 +5,9 @@ const api = require('../lib/api')
 
 program
   .version('0.0.1')
-  .option('-lp, --list-players', 'List all NBA Players', api.getPlayers)
-  .option('-n, --number', 'Get total number of NBA players', api.getNumberOfPlayers)
+  .option('-n, --total-players', 'Get total number of NBA players', api.getNumberOfPlayers)
+  .option('-lp, --list-players', 'List first 25 NBA Players', api.getAllPlayers)
+
 
 // must be before .parse() since
 // node's emit() is immediate
@@ -20,4 +21,3 @@ program.on('--help', function(){
 });
 
 program.parse(process.argv);
-
