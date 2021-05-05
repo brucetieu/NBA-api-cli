@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const api = require('../lib/api')
+const controller = require('../controllers/player-controller')
 
 program
   .version('0.0.1')
-  .option('-n, --total-players', 'Get total number of NBA players', api.getNumberOfPlayers)
-  .option('-lp, --list-players', 'List first 25 NBA Players', api.getAllPlayers)
+  .option('-n, --total-players', 'Get total number of NBA players', controller.getNumberOfPlayers)
+  .option('-lp, --list-players', 'List first 25 NBA Players', controller.getAllPlayers)
 
 
 // must be before .parse() since
