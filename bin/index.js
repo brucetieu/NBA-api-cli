@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const controller = require('../controllers/player-controller')
+const playerController = require('../controllers/player-controller')
+const teamController = require('../controllers/team-controller')
 
 program
   .version('0.0.1')
-  .option('-n, --total-players', 'Get total number of NBA players', controller.getNumberOfPlayers)
-  .option('-lp, --list-players', 'List first 25 NBA Players', controller.getAllPlayers)
+  .option('-np, --total-players', 'Get total number of NBA players', playerController.getNumberOfPlayers)
+  .option('-lp, --list-players', 'List NBA Players', playerController.getAllPlayers)
+  .option('-nt, --total-teams', 'Get total number of NBA teams', teamController.getNumberOfTeams)
+  .option('-lt, --list-teams', 'List NBA teams', teamController.getAllTeams)
 
 
 // must be before .parse() since

@@ -1,6 +1,7 @@
 const nbaAPI = "https://www.balldontlie.io/api/v1";
 const axios = require("axios");
-const playerPrompts = require("../prompts/player-prompts");
+const pagePrompts = require("../prompts/page-prompts");
+const searchPrompts = require("../prompts/search-prompts");
 
 const axiosGet = async (nbaApiUrl) => {
   const response = await axios.get(nbaApiUrl);
@@ -20,11 +21,11 @@ const axiosGet = async (nbaApiUrl) => {
   console.log(newData);
 };
 
-const getAllPlayersRoute = async (answer) => {
+const playersHandler = async (answer) => {
   let nbaApiUrl;
   if (answer.options.includes("per_page")) {
     nbaApiUrl = nbaAPI + "/players?per_page=";
-    playerPrompts
+    pagePrompts
       .perPagePrompt()
       .then(
         async (input) =>
@@ -32,15 +33,21 @@ const getAllPlayersRoute = async (answer) => {
       );
   } else if (answer.options === "page") {
     nbaApiUrl = nbaAPI + "/players?page=";
-    playerPrompts
+    pagePrompts
       .pagePrompt()
       .then(
         async (input) => await axiosGet(nbaApiUrl + input.pageInput.toString())
       );
-  } else {
+  } else if (answer.options === "player_search") {
     nbaApiUrl = nbaAPI + "/players?search=";
-    playerPrompts.playerSearchPrompt().then(async (input) => {
+    searchPrompts.playerSearchPrompt().then(async (input) => {
       await axiosGet(nbaApiUrl + input.playerInput);
+    });
+  } else {
+    nbaApiUrl = nbaAPI + "/players/";
+    searchPrompts.searchByPlayerIDPrompt().then(async (input) => {
+      const axiosResp = await axios.get(nbaApiUrl + input.playerIDInput);
+      console.log(axiosResp.data);
     });
   }
 };
@@ -51,6 +58,6 @@ const getNumberOfPlayersRoute = async () => {
 };
 
 module.exports = {
-  getAllPlayersRoute,
+  playersHandler,
   getNumberOfPlayersRoute,
 };
