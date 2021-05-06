@@ -1,7 +1,7 @@
 const nbaAPI = "https://www.balldontlie.io/api/v1";
 const axios = require("axios");
 const pagePrompts = require("../prompts/page-prompts");
-const searchPrompts = require('../prompts/search-prompts')
+const searchPrompts = require("../prompts/search-prompts");
 
 const axiosGet = async (nbaApiUrl) => {
   const response = await axios.get(nbaApiUrl);
@@ -46,9 +46,9 @@ const playersHandler = async (answer) => {
   } else {
     nbaApiUrl = nbaAPI + "/players/";
     searchPrompts.searchByPlayerIDPrompt().then(async (input) => {
-      const axiosResp = await axios.get(nbaApiUrl + input.playerIDInput)
-      console.log(axiosResp.data)
-    })
+      const axiosResp = await axios.get(nbaApiUrl + input.playerIDInput);
+      console.log(axiosResp.data);
+    });
   }
 };
 
@@ -56,7 +56,6 @@ const getNumberOfPlayersRoute = async () => {
   const response = await axios.get(nbaAPI + "/players");
   console.log(`Total number of players: ${response.data.meta.total_count}`);
 };
-
 
 module.exports = {
   playersHandler,

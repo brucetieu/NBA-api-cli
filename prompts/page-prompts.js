@@ -20,7 +20,6 @@ const pagePrompt = () => {
   ]);
 };
 
-
 module.exports = {
   perPagePrompt,
   pagePrompt,

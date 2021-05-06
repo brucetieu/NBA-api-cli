@@ -21,17 +21,17 @@ const searchByPlayerIDPrompt = () => {
 };
 
 const searchByTeamIDPrompt = () => {
-    return inquirer.prompt([
-      {
-        type: "input",
-        name: "teamIDInput",
-        message: "Enter the id of the team",
-      },
-    ]);
-  };
-  
+  return inquirer.prompt([
+    {
+      type: "input",
+      name: "teamIDInput",
+      message: "Enter the id of the team",
+    },
+  ]);
+};
+
 module.exports = {
   playerSearchPrompt,
   searchByPlayerIDPrompt,
-  searchByTeamIDPrompt
+  searchByTeamIDPrompt,
 };
