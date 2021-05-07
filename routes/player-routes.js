@@ -1,24 +1,29 @@
 const nbaAPI = "https://www.balldontlie.io/api/v1";
 const axios = require("axios");
+const { response } = require("express");
 const pagePrompts = require("../prompts/page-prompts");
 const searchPrompts = require("../prompts/search-prompts");
 
 const axiosGet = async (nbaApiUrl) => {
-  const response = await axios.get(nbaApiUrl);
-  const newData = [];
-  response.data.data.forEach((player) => {
-    const filteredResponse = {};
-    filteredResponse["id"] = player["id"];
-    filteredResponse["position"] = player["position"];
-    filteredResponse["full_name"] =
-      player["first_name"] + " " + player["last_name"];
-    filteredResponse["height"] =
-      player["height_feet"] + " ft " + player["height_inches"] + " in";
-    filteredResponse["team"] = player["team"]["full_name"];
-    newData.push(filteredResponse);
-  });
-  newData.push(response.data.meta);
-  console.log(newData);
+  try {
+    const response = await axios.get(nbaApiUrl);
+    const newData = [];
+    response.data.data.forEach((player) => {
+      const filteredResponse = {};
+      filteredResponse["id"] = player["id"];
+      filteredResponse["position"] = player["position"];
+      filteredResponse["full_name"] =
+        player["first_name"] + " " + player["last_name"];
+      filteredResponse["height"] =
+        player["height_feet"] + " ft " + player["height_inches"] + " in";
+      filteredResponse["team"] = player["team"]["full_name"];
+      newData.push(filteredResponse);
+    });
+    newData.push(response.data.meta);
+    console.log(newData);
+  } catch (e) {
+    console.log({ message: e.message, name: e.name });
+  }
 };
 
 const playersHandler = async (answer) => {
@@ -46,8 +51,12 @@ const playersHandler = async (answer) => {
   } else {
     nbaApiUrl = nbaAPI + "/players/";
     searchPrompts.searchByPlayerIDPrompt().then(async (input) => {
-      const axiosResp = await axios.get(nbaApiUrl + input.playerIDInput);
-      console.log(axiosResp.data);
+      try {
+        const axiosResp = await axios.get(nbaApiUrl + input.playerIDInput);
+        console.log(axiosResp.data);
+      } catch (e) {
+        console.log({ message: e.message, name: e.name });
+      }
     });
   }
 };

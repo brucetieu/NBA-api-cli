@@ -4,9 +4,13 @@ const pagePrompts = require("../prompts/page-prompts");
 const searchPrompts = require("../prompts/search-prompts");
 
 const axiosGet = async (nbaApiUrl) => {
-  const response = await axios.get(nbaApiUrl);
-  console.log(response.data.data);
-  console.log(response.data.meta);
+  try {
+    const response = await axios.get(nbaApiUrl);
+    console.log(response.data.data);
+    console.log(response.data.meta);
+  } catch (e) {
+    console.log({ message: e.message, name: e.name });
+  }
 };
 
 const teamsHandler = async (answer) => {
@@ -29,8 +33,12 @@ const teamsHandler = async (answer) => {
   } else {
     nbaApiUrl = nbaAPI + "/teams/";
     searchPrompts.searchByTeamIDPrompt().then(async (input) => {
-      const axiosResp = await axios.get(nbaApiUrl + input.teamIDInput);
-      console.log(axiosResp.data);
+      try {
+        const axiosResp = await axios.get(nbaApiUrl + input.teamIDInput);
+        console.log(axiosResp.data);
+      } catch (e) {
+        console.log({ message: e.message, name: e.name });
+      }
     });
   }
 };
