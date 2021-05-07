@@ -1,6 +1,6 @@
 const axios = require("axios");
-const searchPrompts = require("../prompts/search-prompts");
-const pagePrompts = require("../prompts/page-prompts");
+const searchPrompt = require("../prompts/search-prompts");
+const pagePrompt = require("../prompts/page-prompts");
 
 const getTeamsData = async (nbaApiUrl) => {
   try {
@@ -13,7 +13,7 @@ const getTeamsData = async (nbaApiUrl) => {
 };
 
 const perPageTeams = (url) => {
-  pagePrompts
+  pagePrompt
     .perPagePrompt()
     .then(
       async (input) => await getTeamsData(url + input.perPageInput.toString())
@@ -21,7 +21,7 @@ const perPageTeams = (url) => {
 };
 
 const pageTeams = (url) => {
-  pagePrompts
+  pagePrompt
     .pagePrompt()
     .then(
       async (input) => await getTeamsData(url + input.pageInput.toString())
@@ -29,7 +29,7 @@ const pageTeams = (url) => {
 };
 
 const teamIdSearch = (url) => {
-  searchPrompts.searchByTeamIDPrompt().then(async (input) => {
+  searchPrompt.searchByTeamIDPrompt().then(async (input) => {
     try {
       const axiosResp = await axios.get(url + input.teamIDInput);
       console.log(axiosResp.data);
