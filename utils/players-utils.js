@@ -1,5 +1,5 @@
 const axios = require("axios");
-const searchPrompts = require('../prompts/search-prompts')
+const searchPrompts = require("../prompts/search-prompts");
 
 const getFilteredPlayersData = async (nbaApiUrl) => {
   try {
@@ -26,13 +26,19 @@ const getFilteredPlayersData = async (nbaApiUrl) => {
 const perPagePlayers = (url) => {
   pagePrompts
     .perPagePrompt()
-    .then(async (input) => await getFilteredPlayersData(url + input.perPageInput.toString()));
+    .then(
+      async (input) =>
+        await getFilteredPlayersData(url + input.perPageInput.toString())
+    );
 };
 
 const pagePlayers = (url) => {
   pagePrompts
     .pagePrompt()
-    .then(async (input) => await getFilteredPlayersData(url + input.pageInput.toString()));
+    .then(
+      async (input) =>
+        await getFilteredPlayersData(url + input.pageInput.toString())
+    );
 };
 
 const playerSearch = (url) => {
@@ -57,5 +63,5 @@ module.exports = {
   pagePlayers,
   getFilteredPlayersData,
   playerSearch,
-  playerIdSearch
-}
+  playerIdSearch,
+};

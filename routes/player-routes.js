@@ -1,6 +1,6 @@
 const nbaAPI = "https://www.balldontlie.io/api/v1";
 const axios = require("axios");
-const playerUtils = require('../utils/players-utils')
+const playerUtils = require("../utils/players-utils");
 
 const playersHandler = async (answer) => {
   if (answer.options.includes("per_page")) {
