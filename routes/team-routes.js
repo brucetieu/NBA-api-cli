@@ -1,45 +1,15 @@
 const nbaAPI = "https://www.balldontlie.io/api/v1";
 const axios = require("axios");
-const pagePrompts = require("../prompts/page-prompts");
-const searchPrompts = require("../prompts/search-prompts");
+const teamUtils = require('../utils/team-utils')
 
-const axiosGet = async (nbaApiUrl) => {
-  try {
-    const response = await axios.get(nbaApiUrl);
-    console.log(response.data.data);
-    console.log(response.data.meta);
-  } catch (e) {
-    console.log({ message: e.message, name: e.name });
-  }
-};
 
 const teamsHandler = async (answer) => {
-  let nbaApiUrl;
   if (answer.options.includes("per_page")) {
-    nbaApiUrl = nbaAPI + "/teams?per_page=";
-    pagePrompts
-      .perPagePrompt()
-      .then(
-        async (input) =>
-          await axiosGet(nbaApiUrl + input.perPageInput.toString())
-      );
+    teamUtils.perPageTeams(nbaAPI + "/teams?per_page=")
   } else if (answer.options === "page") {
-    nbaApiUrl = nbaAPI + "/teams?page=";
-    pagePrompts
-      .pagePrompt()
-      .then(
-        async (input) => await axiosGet(nbaApiUrl + input.pageInput.toString())
-      );
+    teamUtils.pageTeams(nbaAPI + "/teams?page=")
   } else {
-    nbaApiUrl = nbaAPI + "/teams/";
-    searchPrompts.searchByTeamIDPrompt().then(async (input) => {
-      try {
-        const axiosResp = await axios.get(nbaApiUrl + input.teamIDInput);
-        console.log(axiosResp.data);
-      } catch (e) {
-        console.log({ message: e.message, name: e.name });
-      }
-    });
+    teamUtils.teamIdSearch(nbaAPI + "/teams/")
   }
 };
 
