@@ -4,31 +4,39 @@ const playerService = require("../services/player-services");
 const pagePrompt = require("../prompts/page-prompts")
 const searchPrompt = require('../prompts/search-prompts')
 
+const _filterPageParams = async (input) => {
+    if (input.perPageInput === '' && input.pageInput === '') {
+      await playerService.getFilteredPlayersData(nbaAPI + "/players")
+    } else if (input.perPageInput !== '' && input.pageInput === '') {
+      console.log(nbaAPI + `/players?page=${input.perPageInput}`)
+      await playerService.getFilteredPlayersData(nbaAPI + `/players?per_page=${input.perPageInput}`);
+    } else if (input.perPageInput === '' && input.pageInput !== '') {
+      await playerService.getFilteredPlayersData(nbaAPI + `/players?page=${input.pageInput}`);
+    } else if (input.perPageInput && input.pageInput) {
+      await playerService.getFilteredPlayersData(nbaAPI + `/players?per_page=${input.perPageInput}&page=${input.pageInput}`)
+    }
+}
+
+const _filterPlayerParams = async (input) => {
+  if (input.playerSearchOptions === 'search by first or last name') {
+    searchPrompt.playerSearchPrompt().then( async (data) => {
+      await playerService.getFilteredPlayersData(nbaAPI + `/players?search=${data.playerInput}`)
+    })
+  } else {
+    searchPrompt.searchByPlayerIDPrompt().then( async (data) => {
+      await playerService.playerIdSearch(nbaAPI + `/players/${data.playerIDInput}`)
+    })
+  }
+}
+
 const playersHandler = (answer) => {
   if (answer.options === "Get All Players") {
     pagePrompt.pagePrompts().then(async (input) => {
-      if (input.perPageInput === '' && input.pageInput === '') {
-        await playerService.getFilteredPlayersData(nbaAPI + "/players")
-      } else if (input.perPageInput !== '' && input.pageInput === '') {
-        console.log(nbaAPI + `/players?page=${input.perPageInput}`)
-        await playerService.getFilteredPlayersData(nbaAPI + `/players?per_page=${input.perPageInput}`);
-      } else if (input.perPageInput === '' && input.pageInput !== '') {
-        await playerService.getFilteredPlayersData(nbaAPI + `/players?page=${input.pageInput}`);
-      } else if (input.perPageInput && input.pageInput) {
-        await playerService.getFilteredPlayersData(nbaAPI + `/players?per_page=${input.perPageInput}&page=${input.pageInput}`)
-      }
+      await _filterPageParams(input)
     })
   } else {
-    searchPrompt.specificPlayerPrompt().then(input => {
-      if (input.playerSearchOptions === 'search by first or last name') {
-        searchPrompt.playerSearchPrompt().then( async (data) => {
-          await playerService.getFilteredPlayersData(nbaAPI + `/players?search=${data.playerInput}`)
-        })
-      } else {
-        searchPrompt.searchByPlayerIDPrompt().then( async (data) => {
-          await playerService.playerIdSearch(nbaAPI + `/players/${data.playerIDInput}`)
-        })
-      }
+    searchPrompt.specificPlayerPrompt().then(async input => {
+      await _filterPlayerParams(input)
     })
   }
 }
