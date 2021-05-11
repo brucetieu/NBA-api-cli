@@ -7,10 +7,8 @@ const playerOptionPrompt = () => {
       name: "options",
       message: "Select an option",
       choices: [
-        "per_page (default = 25)",
-        "page",
-        "player_search",
-        "search player by id",
+        "Get All Players",
+        "Get a Specific Player"
       ],
     },
   ]);

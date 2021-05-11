@@ -1,26 +1,20 @@
 const inquirer = require("inquirer");
 
-const perPagePrompt = () => {
+const pagePrompts = () => {
   return inquirer.prompt([
     {
       type: "input",
       name: "perPageInput",
-      message: "Enter the number of results you want to see per page",
+      message: "Enter the number of results you want to see per page (max 100, can be left blank)",
     },
-  ]);
-};
-
-const pagePrompt = () => {
-  return inquirer.prompt([
     {
       type: "input",
       name: "pageInput",
-      message: "Enter the page number to view",
+      message: "Enter the page number to view (can be left blank)",
     },
   ]);
 };
 
 module.exports = {
-  perPagePrompt,
-  pagePrompt,
+  pagePrompts,
 };

@@ -1,5 +1,16 @@
 const inquirer = require("inquirer");
 
+const specificPlayerPrompt = () => {
+  return inquirer.prompt([
+    {
+      type: "list",
+      name: "playerSearchOptions",
+      message: "Select an option",
+      choices: ["search by first or last name", "search by id"],
+    },
+  ])
+}
+
 const playerSearchPrompt = () => {
   return inquirer.prompt([
     {
@@ -34,4 +45,5 @@ module.exports = {
   playerSearchPrompt,
   searchByPlayerIDPrompt,
   searchByTeamIDPrompt,
+  specificPlayerPrompt
 };
