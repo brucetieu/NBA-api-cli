@@ -12,31 +12,14 @@ const getTeamsData = async (nbaApiUrl) => {
   }
 };
 
-const perPageTeams = (url) => {
-  pagePrompt
-    .perPagePrompt()
-    .then(
-      async (input) => await getTeamsData(url + input.perPageInput.toString())
-    );
-};
 
-const pageTeams = (url) => {
-  pagePrompt
-    .pagePrompt()
-    .then(
-      async (input) => await getTeamsData(url + input.pageInput.toString())
-    );
-};
-
-const teamIdSearch = (url) => {
-  searchPrompt.searchByTeamIDPrompt().then(async (input) => {
+const teamIdSearch = async (url) => {
     try {
-      const axiosResp = await axios.get(url + input.teamIDInput);
+      const axiosResp = await axios.get(url);
       console.log(axiosResp.data);
     } catch (e) {
       console.log({ message: e.message, name: e.name });
     }
-  });
 };
 
 module.exports = {

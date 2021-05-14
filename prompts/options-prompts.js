@@ -20,7 +20,7 @@ const teamOptionPrompt = () => {
       type: "list",
       name: "options",
       message: "Select an option",
-      choices: ["per_page (default = 25)", "page", "search team by id"],
+      choices: ["Get All Teams", "Get a Specific Team"],
     },
   ]);
 };

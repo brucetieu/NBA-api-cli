@@ -1,17 +1,34 @@
 const nbaAPI = "https://www.balldontlie.io/api/v1";
 const axios = require("axios");
-const teamService = require('../services/team-services')
+const pagePrompt = require("../prompts/page-prompts");
+const teamService = require('../services/team-services');
+const searchPrompt = require('../prompts/search-prompts')
 
-
-const teamsHandler = async (answer) => {
-  if (answer.options.includes("per_page")) {
-    teamService.perPageTeams(nbaAPI + "/teams?per_page=")
-  } else if (answer.options === "page") {
-    teamService.pageTeams(nbaAPI + "/teams?page=")
-  } else {
-    teamService.teamIdSearch(nbaAPI + "/teams/")
+const _filterTeamPageParams = async (input) => {
+  if (input.perPageInput === '' && input.pageInput === '') {
+    await teamService.getTeamsData(nbaAPI + "/teams")
+  } else if (input.perPageInput !== '' && input.pageInput === '') {
+    console.log(nbaAPI + `/players?page=${input.perPageInput}`)
+    await teamService.getTeamsData(nbaAPI + `/teams?per_page=${input.perPageInput}`);
+  } else if (input.perPageInput === '' && input.pageInput !== '') {
+    await teamService.getTeamsData(nbaAPI + `/teams?page=${input.pageInput}`);
+  } else if (input.perPageInput && input.pageInput) {
+    await teamService.getTeamsData(nbaAPI + `/teams?per_page=${input.perPageInput}&page=${input.pageInput}`)
   }
-};
+}
+
+const teamsHandler = (answer) => {
+  if (answer.options === "Get All Teams") {
+    pagePrompt.pagePrompts().then(async (input) => {
+      await _filterTeamPageParams(input)
+    })
+  } else {
+    searchPrompt.searchByTeamIDPrompt().then(async input => {
+      await teamService.teamIdSearch(nbaAPI + `/teams/${input.teamIDInput}`)
+    })
+  }
+}
+
 
 const getNumberOfTeamsRoute = async () => {
   const response = await axios.get(nbaAPI + "/teams");
