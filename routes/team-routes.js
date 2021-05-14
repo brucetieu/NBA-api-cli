@@ -1,8 +1,7 @@
 const nbaAPI = "https://www.balldontlie.io/api/v1";
 const axios = require("axios");
-const pagePrompt = require("../prompts/page-prompts");
-const teamService = require('../services/team-services');
-const searchPrompt = require('../prompts/search-prompts')
+const prompt = require("../prompts/prompts");
+const teamService = require("../services/team-services")
 
 const _filterTeamPageParams = async (input) => {
   if (input.perPageInput === '' && input.pageInput === '') {
@@ -19,11 +18,11 @@ const _filterTeamPageParams = async (input) => {
 
 const teamsHandler = (answer) => {
   if (answer.options === "Get All Teams") {
-    pagePrompt.pagePrompts().then(async (input) => {
+    prompt.pagePrompts().then(async (input) => {
       await _filterTeamPageParams(input)
     })
   } else {
-    searchPrompt.searchByTeamIDPrompt().then(async input => {
+    prompt.searchByTeamIDPrompt().then(async input => {
       await teamService.teamIdSearch(nbaAPI + `/teams/${input.teamIDInput}`)
     })
   }

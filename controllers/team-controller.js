@@ -1,8 +1,8 @@
 const teams = require("../routes/team-routes");
-const optionsPrompts = require("../prompts/options-prompts");
+const prompt = require("../prompts/prompts");
 
 const getAllTeams = () => {
-  optionsPrompts.teamOptionPrompt().then(async (answer) => {
+  prompt.teamOptionPrompt().then(async (answer) => {
     await teams.teamsHandler(answer);
   });
 };
