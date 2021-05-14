@@ -12,21 +12,6 @@ const getTeamsData = async (nbaApiUrl) => {
   }
 };
 
-const perPageTeams = (url) => {
-  pagePrompt
-    .perPagePrompt()
-    .then(
-      async (input) => await getTeamsData(url + input.perPageInput.toString())
-    );
-};
-
-const pageTeams = (url) => {
-  pagePrompt
-    .pagePrompt()
-    .then(
-      async (input) => await getTeamsData(url + input.pageInput.toString())
-    );
-};
 
 const teamIdSearch = async (url) => {
     try {
