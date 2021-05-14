@@ -1,6 +1,4 @@
 const axios = require("axios");
-const searchPrompt = require("../prompts/search-prompts");
-const pagePrompt = require("../prompts/page-prompts");
 
 const getTeamsData = async (nbaApiUrl) => {
   try {
@@ -23,8 +21,6 @@ const teamIdSearch = async (url) => {
 };
 
 module.exports = {
-  perPageTeams,
-  pageTeams,
   getTeamsData,
   teamIdSearch,
 };
