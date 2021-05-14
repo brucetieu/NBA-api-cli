@@ -28,15 +28,13 @@ const pageTeams = (url) => {
     );
 };
 
-const teamIdSearch = (url) => {
-  searchPrompt.searchByTeamIDPrompt().then(async (input) => {
+const teamIdSearch = async (url) => {
     try {
-      const axiosResp = await axios.get(url + input.teamIDInput);
+      const axiosResp = await axios.get(url);
       console.log(axiosResp.data);
     } catch (e) {
       console.log({ message: e.message, name: e.name });
     }
-  });
 };
 
 module.exports = {
