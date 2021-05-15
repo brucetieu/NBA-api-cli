@@ -3,6 +3,7 @@
 const program = require('commander');
 const playerController = require('../controllers/player-controller')
 const teamController = require('../controllers/team-controller')
+const seasonAvgController = require('../controllers/season-averages-controller')
 
 program
   .version('0.0.1')
@@ -10,6 +11,7 @@ program
   .option('-lp, --list-players', 'List NBA Players', playerController.getAllPlayers)
   .option('-nt, --total-teams', 'Get total number of NBA teams', teamController.getNumberOfTeams)
   .option('-lt, --list-teams', 'List NBA teams', teamController.getAllTeams)
+  .option('-la, --list-averages', 'List Player Averages', seasonAvgController.getAverages)
 
 
 // must be before .parse() since

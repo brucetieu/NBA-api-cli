@@ -1,8 +1,8 @@
 const players = require("../routes/player-routes");
-const optionsPrompts = require("../prompts/options-prompts");
+const prompt = require("../prompts/prompts");
 
 const getAllPlayers = () => {
-  optionsPrompts.playerOptionPrompt().then(async (answer) => {
+  prompt.playerOptionPrompt().then(async (answer) => {
     await players.playersHandler(answer);
   });
 };

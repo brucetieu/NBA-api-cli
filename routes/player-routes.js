@@ -1,8 +1,7 @@
 const nbaAPI = "https://www.balldontlie.io/api/v1";
 const axios = require("axios");
 const playerService = require("../services/player-services");
-const pagePrompt = require("../prompts/page-prompts")
-const searchPrompt = require('../prompts/search-prompts')
+const prompt = require("../prompts/prompts");
 
 const _filterPageParams = async (input) => {
     if (input.perPageInput === '' && input.pageInput === '') {
@@ -19,23 +18,23 @@ const _filterPageParams = async (input) => {
 
 const _filterPlayerParams = async (input) => {
   if (input.playerSearchOptions === 'search by first or last name') {
-    searchPrompt.playerSearchPrompt().then( async (data) => {
+    prompt.playerSearchPrompt().then( async (data) => {
       await playerService.getFilteredPlayersData(nbaAPI + `/players?search=${data.playerInput}`)
     })
   } else {
-    searchPrompt.searchByPlayerIDPrompt().then( async (data) => {
-      await playerService.playerIdSearch(nbaAPI + `/players/${data.playerIDInput}`)
+    prompt.searchByPlayerIDPrompt().then( async (data) => {
+      await playerService.logPlayerIdSearch(nbaAPI + `/players/${data.playerIDInput}`)
     })
   }
 }
 
 const playersHandler = (answer) => {
   if (answer.options === "Get All Players") {
-    pagePrompt.pagePrompts().then(async (input) => {
+    prompt.pagePrompts().then(async (input) => {
       await _filterPageParams(input)
     })
   } else {
-    searchPrompt.specificPlayerPrompt().then(async input => {
+    prompt.specificPlayerPrompt().then(async input => {
       await _filterPlayerParams(input)
     })
   }
