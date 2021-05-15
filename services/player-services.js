@@ -23,18 +23,18 @@ const getFilteredPlayersData = async (nbaApiUrl) => {
 };
 
 const savePlayerIdSearch = async (url) => {
-    try {
-      const axiosResp = await axios.get(url);
-      return axiosResp
-    } catch (e) {
-      console.log({ message: e.message, name: e.name });
-    }
+  try {
+    const axiosResp = await axios.get(url);
+    return axiosResp;
+  } catch (e) {
+    console.log({ message: e.message, name: e.name });
+  }
 };
 
 const logPlayerIdSearch = async (url) => {
   try {
     const axiosResp = await axios.get(url);
-    console.log(axiosResp.data)
+    console.log(axiosResp.data);
   } catch (e) {
     console.log({ message: e.message, name: e.name });
   }
@@ -43,5 +43,5 @@ const logPlayerIdSearch = async (url) => {
 module.exports = {
   getFilteredPlayersData,
   savePlayerIdSearch,
-  logPlayerIdSearch
+  logPlayerIdSearch,
 };
