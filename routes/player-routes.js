@@ -23,7 +23,7 @@ const _filterPlayerParams = async (input) => {
     })
   } else {
     prompt.searchByPlayerIDPrompt().then( async (data) => {
-      await playerService.playerIdSearch(nbaAPI + `/players/${data.playerIDInput}`)
+      await playerService.logPlayerIdSearch(nbaAPI + `/players/${data.playerIDInput}`)
     })
   }
 }

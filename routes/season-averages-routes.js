@@ -43,7 +43,7 @@ const ask = (season) => {
         const response = await axios.get(nbaAPI + "/season_averages?" + queryString)
         
         for (let resp of response.data.data) {
-            let queriedPlayer = await playerService.playerIdSearch(nbaAPI + `/players/${resp.player_id}`)
+            let queriedPlayer = await playerService.savePlayerIdSearch(nbaAPI + `/players/${resp.player_id}`)
             let full_name = queriedPlayer.data.first_name + ' ' + queriedPlayer.data.last_name
             console.log({full_name: full_name, ...resp})
             // playerNames.push(queriedPlayer.data.first_name + ' ' + queriedPlayer.data.last_name)
