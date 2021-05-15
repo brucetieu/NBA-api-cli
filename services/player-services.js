@@ -25,7 +25,8 @@ const getFilteredPlayersData = async (nbaApiUrl) => {
 const playerIdSearch = async (url) => {
     try {
       const axiosResp = await axios.get(url);
-      console.log(axiosResp.data);
+      return axiosResp
+      // console.log(axiosResp.data);
     } catch (e) {
       console.log({ message: e.message, name: e.name });
     }

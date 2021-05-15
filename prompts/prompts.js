@@ -100,7 +100,7 @@ const seasonPrompt = () => {
   ]);
 };
 
-const statsQueryParams = () => {
+const playerAvgPrompt = () => {
   return inquirer.prompt([
     {
       type: "input",
@@ -110,7 +110,7 @@ const statsQueryParams = () => {
     {
       type: "confirm",
       name: "askAgain",
-      message: "Want to enter another player ID (just hit enter for YES)?",
+      message: "Want to enter another player ID?",
       default: true,
     },
   ]);
@@ -126,5 +126,5 @@ module.exports = {
   searchByPlayerIDPrompt,
   searchByTeamIDPrompt,
   seasonPrompt,
-  statsQueryParams
+  playerAvgPrompt
 };
