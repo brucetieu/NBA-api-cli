@@ -22,7 +22,37 @@ const getFilteredPlayersData = async (nbaApiUrl) => {
   }
 };
 
-const savePlayerIdSearch = async (url) => {
+const getSeasonAvgPerPlayer = async (url, output) => {
+  let queryString = "";
+
+  for (let i = 0; i < output.length - 1; i++) {
+    queryString += `player_ids[]=${output[i]}&`;
+  }
+  queryString += `season=${output[output.length - 1]}`;
+
+  const response = await axios.get(url + "/season_averages?" + queryString);
+
+  for (let resp of response.data.data) {
+    let queriedPlayer = await saveAxiosData(
+      url + `/players/${resp.player_id}`
+    );
+    let full_name =
+      queriedPlayer.data.first_name + " " + queriedPlayer.data.last_name;
+    console.log({ full_name: full_name, ...resp });
+  }
+};
+
+const getAxiosDataAndMetaData = async (nbaApiUrl) => {
+  try {
+    const response = await axios.get(nbaApiUrl);
+    console.log(response.data.data);
+    console.log(response.data.meta);
+  } catch (e) {
+    console.log({ message: e.message, name: e.name });
+  }
+};
+
+const saveAxiosData = async (url) => {
   try {
     const axiosResp = await axios.get(url);
     return axiosResp;
@@ -31,7 +61,7 @@ const savePlayerIdSearch = async (url) => {
   }
 };
 
-const logPlayerIdSearch = async (url) => {
+const logAxiosData = async (url) => {
   try {
     const axiosResp = await axios.get(url);
     console.log(axiosResp.data);
@@ -42,6 +72,8 @@ const logPlayerIdSearch = async (url) => {
 
 module.exports = {
   getFilteredPlayersData,
-  savePlayerIdSearch,
-  logPlayerIdSearch,
+  getSeasonAvgPerPlayer,
+  getAxiosDataAndMetaData,
+  saveAxiosData,
+  logAxiosData,
 };
