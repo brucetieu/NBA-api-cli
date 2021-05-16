@@ -1,7 +1,7 @@
 const nbaAPI = "https://www.balldontlie.io/api/v1";
 const axios = require("axios");
 const prompt = require("../prompts/prompts");
-const seasonAvgService = require("../services/season-averages-services");
+const service = require("../services/services");
 
 const output = [];
 
@@ -12,7 +12,7 @@ const ask = (season) => {
       ask(season);
     } else {
       output.push(season);
-      await seasonAvgService.getSeasonAvgPerPlayer(nbaAPI, output);
+      await service.getSeasonAvgPerPlayer(nbaAPI, output);
     }
   });
 };
