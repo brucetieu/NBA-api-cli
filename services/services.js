@@ -1,5 +1,4 @@
 const axios = require("axios");
-const playerService = require("../services/player-services")
 
 const getFilteredPlayersData = async (nbaApiUrl) => {
   try {
@@ -34,7 +33,7 @@ const getSeasonAvgPerPlayer = async (url, output) => {
   const response = await axios.get(url + "/season_averages?" + queryString);
 
   for (let resp of response.data.data) {
-    let queriedPlayer = await playerService.savePlayerIdSearch(
+    let queriedPlayer = await saveAxiosData(
       url + `/players/${resp.player_id}`
     );
     let full_name =
